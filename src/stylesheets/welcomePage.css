@@ -1,0 +1,114 @@
+/* Colors to use
+black: #242424
+turquiose: #2db4be 
+light-grey: #b8b8b8 */
+
+html, body {
+    margin: 0;
+    height: 100%;
+    min-height: 100%;
+}
+
+h1, h2, h3 {
+    font-family: 'Righteous', cursive;
+}
+
+p {
+font-family: 'Roboto', sans-serif;
+}
+
+button {
+    font-family: sans-serif;
+}
+
+.welcome-container {
+}
+
+.header-container {
+    height:100%;
+}
+
+.welcome-body {
+}
+
+.welcome-about {
+    height: 500px;
+    background-image: url('https://images.unsplash.com/photo-1543364221-e76ae14091f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1295&q=80');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center 75%;
+    padding: 1em 2.5em;
+}
+
+.welcome-about-details {
+    color: white;
+    padding: 20px 0px;
+    border: solid 2px;
+    border-color: #242424;
+    background-color: #2424246b;
+}
+
+.welcome-about-details-inner {
+    width: 60%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.find-reviews-button {
+    background-color: #2db4be;
+    border: solid 2px;
+    border-radius: 2px;
+    border-color: #2db4be;
+    color: white;
+    padding: 10px 20px;
+    font-size: 10pt;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.find-reviews-button:hover {
+    background-color: #2db4bee1;
+}
+
+.welcome-details{
+    height: 200px;
+    background: linear-gradient(217deg, #a5a5a5cc, #00000000 70.71%),
+    linear-gradient(127deg, #2db4be, #fffefe00 70.71%),
+    linear-gradient(336deg, #2db4be, #44abff00 70.71%);
+    border-top: solid 2px;
+    border-bottom: solid 2px;
+    border-color: #242424;
+    padding: 1em 3em;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.welcome-details-box {
+    border: solid 2px;
+    border-color: white;
+    color: white;
+    margin: .5em 1em;
+    padding: .5em 1em;
+}
+
+.foot {
+    min-height: 100%;
+    background-color: #242424;
+}
+
+@media (max-width: 791px) {
+    .welcome-details {
+        height: 300px;
+    }
+    
+}
+
+@media (max-width: 528px) {
+    .welcome-details {
+        height: 375px;
+    }
+    
+}
