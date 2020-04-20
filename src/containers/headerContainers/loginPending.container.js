@@ -26,9 +26,9 @@ class LoginPending extends React.Component {
                 </Link>
                 </div>
                 <div className="header-buttons">
-                    {/* <Link to={'/login'}> */}
+                    <Link to={'/gigReviewSearch'}>
                         <button className="header-button find-header">Find Reviews</button>
-                    {/* </Link> */}
+                    </Link>
                     <Link to={'/login'}>
                         <button className="header-button">Login</button>
                     </Link>

@@ -2,12 +2,17 @@ import React from "react";
 import {connect} from 'react-redux';
 import { Redirect } from "react-router";
 import { Link } from 'react-router-dom';
-import { getProfileInfo } from '../actions/profile.action';
+import {
+    getProfileInfo,
+} from '../../actions/profile.action';
 
-import Header from '../components/header.component';
+import Header from '../../components/header.component';
 
-import "../stylesheets/profilePage.css";
-import Axios from "axios";
+import "../../stylesheets/profilePage.css";
+import {
+    loggedIn,
+    updateUserFalse
+} from "../../actions/user.action";
 
 class ProfilePage extends React.Component {
 
@@ -24,7 +29,6 @@ class ProfilePage extends React.Component {
     }
 
     componentDidMount() {
-        console.log("currentUser: " + this.props.currentUser)
         this.props.onMount();
     }
 
@@ -32,8 +36,6 @@ class ProfilePage extends React.Component {
         // if (this.props.redirect === "") {
         //     return (<Redirect to={this.props.redirect}/>)
         // }
-
-        console.log("profile user: " + this.props.profileUsername)
         return (
         <div className="">
             <header className="header-container">
@@ -71,7 +73,7 @@ class ProfilePage extends React.Component {
     }
 
     _renderAboutText() {
-        if (this.props.profileAbout && this.props.currentUser === this.props.profileUsername) {
+        if (this.props.profileAbout) {
             return (<p className="text-center">{this.props.profileAbout}</p>)
         } else if (!this.props.profileAbout && this.props.currentUser === this.props.profileUsername) {
             return (<p className="text-center">(Edit profile to populate this)</p>) 
@@ -81,11 +83,15 @@ class ProfilePage extends React.Component {
     }
 
     _renderEditButton() {
+        let pathToProfileEdit = '/profile/' + this.props.currentUser + '/edit';
+
         if (this.props.currentUser === this.props.profileUsername) {
             return (
-            <button className="edit-profile-button">
-                Edit Profile
-            </button>  
+            <Link to={{ pathname: pathToProfileEdit}}>
+                <button className="edit-profile-button">
+                    Edit Profile
+                </button> 
+            </Link>
             )
         } else {
             return null;
@@ -99,7 +105,10 @@ function mapDispatchToProps(dispatch, props) {
         // logout: () => dispatch(logOut()),
         // clear: () => dispatch(clear()),
         onMount: () => {
+            
+            dispatch(loggedIn());
             dispatch(getProfileInfo(window.location.pathname.substring(9)));
+            dispatch(updateUserFalse());
         }
     }
 };
@@ -107,7 +116,7 @@ function mapDispatchToProps(dispatch, props) {
 
 function mapStateToProps(state, props) {
     return {
-        currentUser: state.user.redirect.currentUser,
+        currentUser: state.user.loggedInCheck.currentUser,
         profileUsername: state.profile.profileInfo.username,
         profileAbout: state.profile.profileInfo.about
     }

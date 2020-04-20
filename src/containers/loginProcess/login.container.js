@@ -46,7 +46,9 @@ class UserLogin extends React.Component {
                         <h1 className="logo-title">GigReport</h1>  
                     </Link>
                     <div className="header-buttons">
+                    <Link to={'/gigReviewSearch'}>
                         <button className="header-button find-header">Find Reviews</button>
+                    </Link>
                     </div>
                 </div>
                 <div className="container mt-4">

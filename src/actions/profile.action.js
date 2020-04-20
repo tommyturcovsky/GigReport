@@ -7,7 +7,6 @@ function getProfileAttempt() {
 }
 
 function getProfileSuccess(profileInfo) {
-    console.log("profile info: " + JSON.stringify(profileInfo))
     return {
         type: "GET_PROFILE_SUCCESS",
         profileInfo

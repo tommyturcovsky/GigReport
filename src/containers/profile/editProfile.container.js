@@ -1,14 +1,24 @@
 import React from "react";
 import {connect} from 'react-redux';
-import {clear, register, validate} from '../../actions/user.action'
+import {
+    clear,
+    register,
+    validate,
+    loggedIn,
+    updateUser
+} from '../../actions/user.action'
 import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
 import { Card } from 'react-bootstrap';
 
+import {
+    getProfileInfo,
+} from '../../actions/profile.action';
+
 class Register extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {username: '', password: '', validatePassword: '', about: ''};
+        this.state = {username: this.props.profileUsername, about: this.props.profileAbout};
     }
 
     handleChange(event, value) {
@@ -16,38 +26,40 @@ class Register extends React.Component {
     }
 
     handleSubmit(event) {
-        this.props.validate(this.state);
+        this.props.updateUser(
+            this.state.username,
+            this.state.about
+        );
         event.preventDefault();
     }
 
     componentDidMount() {
-        this.props.clear();
-        this.setState({
-            username: '',
-            password: '',
-            validatePassword: '',
-            about: '',
-        })
+        this.props.onMount();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.valid.success) {
-            this.props.register(
-                this.state.username,
-                this.state.password,
-                this.state.about
-            );
-        }
+        // if (this.props.valid.success) {
+        //     this.props.register(
+        //         this.state.username,
+        //         this.state.password,
+        //         this.state.about
+        //     );
+        // }
     }
 
     render() {
-        if (this.props.redirect.path) {
-            return (<Redirect to={this.props.redirect.path}/>)
+        let pathToProfile = '/profile/' + this.props.profileUsername;
+        // let error;
+        // if (this.props.error || this.props.valid.message) {
+        //     error = (<h3>{this.props.error || this.props.valid.message}</h3>)
+        // }
+
+        if (this.props.currentUser != this.props.profileUsername) {
+            return <Redirect to={pathToProfile}/>
         }
 
-        let error;
-        if (this.props.error || this.props.valid.message) {
-            error = (<h3>{this.props.error || this.props.valid.message}</h3>)
+        if (this.props.isEditSubmitted) {
+            return <Redirect to={pathToProfile}/>
         }
 
         return (
@@ -57,9 +69,7 @@ class Register extends React.Component {
                     <h1 className="logo-title">GigReport</h1>  
                 </Link>
                 <div className="header-buttons">
-                <Link to={'/gigReviewSearch'}>
                     <button className="header-button find-header">Find Reviews</button>
-                </Link>
                 </div>
             </div>
             <div className="container mt-4">
@@ -68,39 +78,29 @@ class Register extends React.Component {
                 <Card.Body>
                     <Card.Title>
                         <div className="login-card-title-container">
-                            <h2>Sign Up</h2>
-                            <Link className="switch-login-card my-auto" to={'/login'}>
-                                Login
+                            <h2>Edit Profile</h2>
+                            <Link className="switch-login-card my-auto" to={pathToProfile}>
+                                Cancel Changes
                             </Link>
                         </div>
                     </Card.Title>
                 <hr></hr>
+                <div className="profile text-center">
+                    <div className="profile-pic-container">
+                        <img src="https://via.placeholder.com/125/000000/FFFFFF/?text=ProfilePic"></img> 
+                    </div>
+                    <h3 className="profile-username">{this.props.profileUsername}</h3>    
+                </div>                 
                 <form className="login-form" onSubmit={(e) => this.handleSubmit(e)}>
-                    {error}      
-                    <label className="">
-                        Username:
-                        <input type="text"
-                            disabled={this.props.inFlight}
-                            value={this.state.username}
-                            onChange={(e) => this.handleChange(e, 'username')}/> </label>
-                    <label> Password:
-                        <input type="password"
-                            disabled={this.props.inFlight}
-                            value={this.state.password}
-                                onChange={(e) => this.handleChange(e, 'password')} /> </label>
-                    <label> Validate Password:
-                    <input type="password"
-                        disabled={this.props.inFlight}
-                        value={this.state.validatePassword}
-                        onChange={(e) => this.handleChange(e, 'validatePassword')} /> </label>
-                    <label> Tell Us About Yourself:
+                    {/* {error} */}
+                     <label> About:
                     <textarea
                         className="about-textarea"
                         maxLength="150"                    
                         disabled={this.props.inFlight}
                         value={this.state.about}
+                        placeholder="Tell us about yourself..."                    
                         onChange={(e) => this.handleChange(e, 'about')}/> </label>
-                        
                     <input
                         className="login-card-button"
                         type="submit"
@@ -118,17 +118,27 @@ class Register extends React.Component {
 
 
 function mapDispatchToProps(dispatch, props) {
+    let userr = (window.location.pathname.substring(9));
+    userr = userr.substring(0, userr.lastIndexOf('/'));
+
     return {
-        register: (username, password, about) => dispatch(register(username, password, about)),
+        updateUser: (username, about) => dispatch(updateUser(username, about)),
         clear: () => dispatch(clear()),
-        validate: (user) => dispatch(validate(user)),
+
+        onMount: () => {
+            dispatch(loggedIn());
+            dispatch(getProfileInfo(userr));
+        }
     }
 }
 
 
 function mapStateToProps(state, props) {
     return {
-        ...state.user,
+        currentUser: state.user.loggedInCheck.currentUser,
+        profileUsername: state.profile.profileInfo.username,
+        profileAbout: state.profile.profileInfo.about,
+        isEditSubmitted: state.user.isEditSubmitted
     }
 }
 

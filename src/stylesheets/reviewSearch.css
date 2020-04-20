@@ -1,0 +1,66 @@
+.search-background {
+    /* background-color: #ffa264; */
+}
+
+.search-page-container {
+    border-right: solid 5px;
+    border-left: solid 5px;
+    border-color: #242424;
+}
+
+.search-heading-container {
+    background: linear-gradient(217deg, #a5a5a5cc, #00000000 70.71%),
+    linear-gradient(127deg, #2db4be, #fffefe00 70.71%),
+    linear-gradient(336deg, #2db4be, #44abff00 70.71%);
+    border-color: #242424;
+}
+
+.search-bar-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    border-top: solid 2.5px;
+    border-bottom: solid 2.5px;
+    border-color: #242424;
+    background-color: #b8b8b8;
+}
+
+.search-input {
+    border: solid 1px;
+    border-color: #242424;
+    padding: .1em .2em;
+}
+
+.results-row-link {
+    width: 100%;
+}
+
+.search-results-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    padding: 1em .8em;
+    border-bottom: solid 1.5px;
+    border-color: #2db4be;
+    background-color: #242424;
+}
+
+.search-results-row:hover {
+    background-color: #242424ef;
+}
+
+.responsive-img {
+    max-width: 25%;
+    height: auto;
+    border-radius: 5%;
+}
+
+.results-artist-name {
+    text-align: right;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: white;
+}

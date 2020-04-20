@@ -64,12 +64,10 @@ function redirect(
         case 'REGISTER_SUCCESS':
             return Object.assign({}, state, {
                 path: "/",
-                currentUser: action.username
             });
         case 'LOGOUT_SUCCESS':
             return Object.assign({}, state, {
                 path: "/",
-                currentUser: null
             });
         default: 
             return Object.assign({}, state, {
@@ -78,11 +76,46 @@ function redirect(
     }
 }
 
+function loggedInCheck(
+    state = {
+        currentUser: undefined,
+    }, action) {
+    switch (action.type) {
+        case 'LOGGED_IN_TRUE':
+            return Object.assign({}, state, {
+                loggedInStatus: true,
+                currentUser: action.currentUser
+            });
+        case 'LOGGED_IN_FALSE':
+            return Object.assign({}, state, {
+                loggedInStatus: false,
+                currentUser: undefined
+            });
+        default: 
+            return Object.assign({}, state, {
+                path: "",
+            });
+    }
+}
+
+function isEditSubmitted(state = false, action) {
+    switch (action.type) {
+        case 'EDIT_SUBMITTED':
+            return true;
+        case 'EDIT_NOT_SUBMITTED':
+            return false;
+        default:
+            return state;
+    }
+}
+
 export default combineReducers({
     error,
     inFlight,
     redirect,
+    loggedInCheck,
     // username,
-    valid
+    valid,
+    isEditSubmitted
 });
 

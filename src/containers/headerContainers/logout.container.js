@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from 'react-redux';
-import {clear, logOut} from '../../actions/user.action'
+import {clear, logOut, loggedIn} from '../../actions/user.action'
 import { Redirect } from "react-router";
 import { Link } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
@@ -14,6 +14,7 @@ class LogoutContainer extends React.Component {
 
     componentDidMount() {
         this.props.clear();
+        this.props.onMount();
     }
 
     render() {
@@ -31,7 +32,9 @@ class LogoutContainer extends React.Component {
             </Link>
             </div>
             <div className="header-buttons">
-                <button className="header-button find-header">Find Reviews</button>
+                <Link to={'/gigReviewSearch'}>
+                    <button className="header-button find-header">Find Reviews</button>
+                </Link>
                 <Dropdown>
                     <Dropdown.Toggle variant="secondary" id="dropdown-basic">
                         <img src="https://via.placeholder.com/33/000000/FFFFFF/?text=ProfilePic" alt="Profile Pic"/>
@@ -59,6 +62,9 @@ function mapDispatchToProps(dispatch, props) {
     return {
         logout: () => dispatch(logOut()),
         clear: () => dispatch(clear()),
+        onMount: () => {
+            dispatch(loggedIn())
+        }
     }
 };
 
@@ -66,7 +72,7 @@ function mapDispatchToProps(dispatch, props) {
 function mapStateToProps(state, props) {
     return {
         // ...state.user,
-        currentUser: state.user.redirect.currentUser
+        currentUser: state.user.loggedInCheck.currentUser
     }
 };
 

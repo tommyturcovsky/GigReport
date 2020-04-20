@@ -82,8 +82,9 @@ router.post('/authenticate', function (req, res) {
 //             error => res.status(500).send(error));
 // });
 
-router.get('/loggedIn', authParser, function(req, res) {
-    return res.sendStatus(200);
+router.get('/loggedIn', authParser, function (req, res) {
+    username = req.session.username;
+    return res.status(200).send({username});
 })
 
 router.get('/logout', async (req, res) => {
@@ -130,6 +131,12 @@ router.get('/:username', async function (req, res) {
     return await UserModel.getUserByUserName(req.params.username)
         .then((response) => res.status(200).send(response),
             (error) =>  res.status(404).send(`Error finding User:${error}`));
+});
+
+router.put('/:username', async function (req, res) {
+    return await UserModel.updateUserByUsername(req.params.username, req.body)
+        .then((response) => res.status(200).send(response),
+            (error) => res.status(404).send(`Error updating User:${error}`))
 });
 
 router.get('/', (req, res) => UserModel.getAllUsers()

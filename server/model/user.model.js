@@ -16,9 +16,15 @@ function getAllUsers() {
     return UserModel.find().exec();
 }
 
+async function updateUserByUsername(usernameToUpdate, newValues) {
+    await UserModel.updateOne({username: usernameToUpdate}, newValues).exec();
+    return UserModel.findOne({username: usernameToUpdate}).exec();
+}
+
 // Make sure to export a function after you create it!
 module.exports = {
     addUser,
     getUserByUserName,
     getAllUsers,
+    updateUserByUsername
 };

@@ -1,4 +1,4 @@
-import Axios from 'axios'
+import Axios from 'axios';
 
 function loginAttempt() {
     return {
@@ -46,6 +46,31 @@ function logoutSuccess() {
     }
 }
 
+function loggedInTrue(currentUser) {
+    return {
+        type: "LOGGED_IN_TRUE",
+        currentUser: currentUser
+    }
+}
+
+function loggedInFalse() {
+    return {
+        type: "LOGGED_IN_FALSE"
+    }
+}
+
+function updateUserSubmitted() {
+    return {
+        type: "EDIT_SUBMITTED"
+    }
+}
+
+function updateUserNotSubmitted() {
+    return {
+        type: "EDIT_NOT_SUBMITTED"
+    }
+}
+
 
 export function selectUser(username) {
     return {
@@ -62,6 +87,14 @@ export function validate(user) {
 export function clear() {
     return {
         type: "CLEAR"
+    }
+}
+
+export function loggedIn() {
+    return function (dispatch) {
+        return Axios.get('/api/user/loggedin')
+            .then(response => dispatch(loggedInTrue(response.data.username)),
+            error => dispatch(loggedInFalse()))
     }
 }
 
@@ -96,5 +129,25 @@ export function register(username, password, about) {
                 },
                 error => dispatch(registerFailure(error.response.data.message))
             );
+    }
+}
+
+export function updateUser(usernameToUpdate, about) {
+    let putRequestPath = '/api/user/' + usernameToUpdate;
+    let body = {about: about}
+    return function (dispatch) {
+        dispatch(registerAttempt());
+        return Axios.put(putRequestPath, body)
+            .then(response => {
+                dispatch(updateUserSubmitted())
+                },
+                error => dispatch(registerFailure(error.response.data.message))
+            );
+    }
+}
+
+export function updateUserFalse() {
+    return function (dispatch) {
+        return dispatch(updateUserNotSubmitted());
     }
 }

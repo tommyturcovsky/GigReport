@@ -13,7 +13,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import UserLogin from "./containers/loginProcess/login.container";
 import Pokemons from "./containers/pokemons.container";
 import Register from "./containers/loginProcess/register.container";
-import ProfilePage from "./containers/profilePage.container";
+import ProfilePage from "./containers/profile/profilePage.container";
+import ProfileEdit from "./containers/profile/editProfile.container";
+import ReviewSearch from "./containers/reviewSearch.container";
+import ArtistPage from "./containers/artistPage.container";
 import LoggedInComponent from './components/loggedin.component';
 
 const userStore = createStore(reducers, applyMiddleware(thunkMiddleware));
@@ -28,6 +31,9 @@ ReactDOM.render(
                 <Route exact path="/login" component={UserLogin}/>
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/profile/:username" component={ProfilePage} />
+                <Route exact path="/profile/:username/edit" component={ProfileEdit} />
+                <Route exact path="/gigReviewSearch" component={ReviewSearch} />
+                <Route exact path="/artistPage/:spotifyId" component={ArtistPage}/>
                 <Route exact path="/pokemon" component={LoggedInComponent(Pokemons)}/>
             </Switch>
         </BrowserRouter>
