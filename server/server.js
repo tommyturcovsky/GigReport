@@ -3,6 +3,7 @@ const user = require('./controller/user.controller');
 const pokemon = require('./controller/pokemon.controller');
 const item = require('./controller/items.controller');
 const pokedex = require('./controller/pokedex.controller');
+const gigReport = require('./controller/gigReport.controller');
 
 const app = express();
 
@@ -11,7 +12,7 @@ const cookieParse = require('cookie-parser')
 
 // This is the default address for MongoDB.
 // Make sure MongoDB is running!
-const mongoEndpoint = 'mongodb://127.0.0.1/pokemon_app';
+const mongoEndpoint = 'mongodb://127.0.0.1/gigReport_app';
 // useNewUrlParser is not required, but the old parser is deprecated
 mongoose.connect(mongoEndpoint, { useNewUrlParser: true });
 // Get the connection string
@@ -40,6 +41,7 @@ app.use('/api/pokemon', pokemon);
 app.use('/api/user', user);
 app.use('/api/items', item);
 app.use('/api/pokedex', pokedex);
+app.use('/api/gigReports', gigReport)
 
 app.listen(3001, function() {
     console.log('Starting server');

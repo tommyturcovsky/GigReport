@@ -97,6 +97,10 @@ class ProfilePage extends React.Component {
             return null;
         }
     }
+
+    _renderProfileGigReports() {
+        
+    }
 }
 
 
@@ -109,7 +113,7 @@ function mapDispatchToProps(dispatch, props) {
             dispatch(loggedIn());
             dispatch(getProfileInfo(window.location.pathname.substring(9)));
             dispatch(updateUserFalse());
-        }
+        },
     }
 };
 

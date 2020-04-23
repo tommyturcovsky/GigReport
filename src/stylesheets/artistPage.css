@@ -10,3 +10,94 @@
     border: solid 5px;
     border-color: #2db4be;
 }
+
+.artist-info-pic-container {
+    height: 250px;
+}
+
+.artist-info-pic-container img {
+    max-height: 100%;
+    max-width: 100%;
+    border-radius: 5%;
+}
+
+.review-section-header {
+    background: #2db4be;
+    padding: 1em 2em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid 5px;
+    border-bottom-color: #242424;
+    color: white;
+}
+
+.review-section-heading-title {
+
+}
+
+.create-GigReport-button {
+    background-color: #242424;
+    border: solid 2px;
+    border-radius: 2px;
+    border-color: white;
+    color: white;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    padding: 10px 20px;
+    font-size: 10pt;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.create-GigReport-button:hover {
+    background-color: #242424e1;
+}
+
+.gigReports-container{
+    /* background: #f0f0f0; */
+    padding: 1em 2em;
+}
+
+.gigReport-container {
+    padding: 1em 2em;
+    margin: 1.5em 0;
+    border: solid 3px;
+    border-color: #242424;
+    box-shadow: 5px 6px #28a1aa;
+    background-color: white;
+    background: linear-gradient(336deg, #f0f0f0cc, #00000000 70.71%),
+    linear-gradient(127deg, #f8f8f8, #fffefe00 70.71%),
+    linear-gradient(217deg, #ffffff, #44abff00 70.71%);
+}
+
+.gigReport-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-bottom: .5em;
+    border-bottom: solid 1.5px;
+    border-color: #242424;
+    text-align: center;
+}
+
+.gigReport-body {
+    padding: 1em 0;
+}
+
+.gigReport-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: .5em;
+    border-top: solid 1.5px;
+    border-color: #242424;
+    align-items: center;
+}
+
+.gigReport-footer a {
+    color: #2db4be
+}

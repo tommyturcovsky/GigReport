@@ -18,7 +18,7 @@ function profileInfo(
 
 function error(state = '', action) {
     switch (action.type) {
-        case 'GET_PROFILEFAILURE':
+        case 'GET_PROFILE_FAILURE':
             return action.error;
         case 'GET_PROFILE_ATTEMPT':
             return '';

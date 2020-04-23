@@ -17,6 +17,7 @@ import ProfilePage from "./containers/profile/profilePage.container";
 import ProfileEdit from "./containers/profile/editProfile.container";
 import ReviewSearch from "./containers/reviewSearch.container";
 import ArtistPage from "./containers/artistPage.container";
+import GigReportCreate from "./containers/gigReport/gigReportCreate.container";
 import LoggedInComponent from './components/loggedin.component';
 
 const userStore = createStore(reducers, applyMiddleware(thunkMiddleware));
@@ -33,7 +34,9 @@ ReactDOM.render(
                 <Route exact path="/profile/:username" component={ProfilePage} />
                 <Route exact path="/profile/:username/edit" component={ProfileEdit} />
                 <Route exact path="/gigReviewSearch" component={ReviewSearch} />
-                <Route exact path="/artistPage/:spotifyId" component={ArtistPage}/>
+                <Route exact path="/artistPage/:spotifyId" component={ArtistPage} />
+                <Route exact path="/gigReport/create/:spotifyId" component={GigReportCreate} />
+                <Route exact path="/gigReport/edit/:reportId" component={GigReportCreate} />
                 <Route exact path="/pokemon" component={LoggedInComponent(Pokemons)}/>
             </Switch>
         </BrowserRouter>
