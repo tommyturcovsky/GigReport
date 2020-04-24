@@ -82,17 +82,26 @@ class ArtistPage extends React.Component {
             } else {
                 rating = rating + "% 👎"
             }
+
+            function deletehelper(deleteGigReport, reportId) {
+                deleteGigReport(reportId);
+                window.location.reload();
+            }
             
-            function renderUserOptions(currentUser, postAuthor, deleteGigReport, gigReportId) {
+            function renderUserOptions(currentUser, postAuthor, deletehelper, deleteGigReport, gigReportId) {
+                let pathToEditGigReport = "/gigReport/edit/" + gigReportId
                 if (currentUser === postAuthor) {
                     return (
                         <div className="post-edit-button-group">
-                            {/* Make Link to Edit Container */}
-                            <h5>Edit</h5>
+                            <Link to={pathToEditGigReport}>
+                                <h5>Edit</h5>
+                            </Link>
                             {/* Dispatch the delete function */}
-                            <button onClick={deleteGigReport.bind(this, gigReportId)}>
-                                <h5>Delete</h5>
-                            </button>
+                            <h5 className="gigReport-delete" 
+                            onClick={deletehelper.bind(this, deleteGigReport.bind(this), gigReportId)}>
+                                <a>Delete</a>
+                            </h5>
+
                         </div>
                     );
                 } else {
@@ -115,9 +124,9 @@ class ArtistPage extends React.Component {
                 </div>
                     <div className="gigReport-footer">
                         {renderUserOptions(currentUser,
-                            gigReport.postAuthor,
+                            gigReport.postAuthor, deletehelper,
                             deleteGigReport, gigReport._id)}
-                    <h6>Posted: <Moment format="MM/DD/YYYY">{gigReport.postCreated}</Moment></h6>
+                    <h6 className="text-center">Posted: <Moment format="MM/DD/YYYY">{gigReport.postCreated}</Moment></h6>
                     <Link to={"/profile/" + gigReport.postAuthor}>  
                         <h6>By {gigReport.postAuthor}</h6>
                     </Link>     

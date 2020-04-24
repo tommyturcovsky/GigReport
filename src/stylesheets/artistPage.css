@@ -101,3 +101,7 @@
 .gigReport-footer a {
     color: #2db4be
 }
+
+.gigReport-delete:hover{
+    cursor: pointer;
+}

@@ -5,8 +5,14 @@ import { Link } from 'react-router-dom';
 import {
     getProfileInfo,
 } from '../../actions/profile.action';
+import Moment from 'react-moment';
 
 import Header from '../../components/header.component';
+
+import { 
+    getUserGigReports,
+    deleteGigReport,
+ } from "../../actions/gigReport.action";
 
 import "../../stylesheets/profilePage.css";
 import {
@@ -49,7 +55,7 @@ class ProfilePage extends React.Component {
                         </div>
                         <h3 className="profile-username">{this.props.profileUsername}</h3>    
                     </div> 
-                    <div className="profile-about-container">
+                    <div className="profile-about-container mx-auto">
                         <div className="profile-about-title-container">
                             <h3 className="text-center">About</h3> 
                         </div>
@@ -62,7 +68,11 @@ class ProfilePage extends React.Component {
                 </div>
                 <div className="profile-reviews">
                     <div className="profile-reviews-title-container">
-                        <h3>My Concert Reviews</h3>    
+                        <h3>My GigReports</h3>
+                        {this._renderProfileReports(
+                            this.props.currentUser,
+                            this.props.deleteGigReport
+                        )} 
                     </div>
                         <p>
                     </p>
@@ -98,8 +108,80 @@ class ProfilePage extends React.Component {
         }
     }
 
-    _renderProfileGigReports() {
-        
+    _renderProfileReports(currentUser, deleteGigReport) {
+        if (!this.props.userGigReportsList) {
+            return null;
+        }
+
+        if (this.props.userGigReportsList.length === 0) {
+            return ( <h2>No GigReports created yet</h2> );
+        }
+
+        const artistGigReports = this.props.userGigReportsList.map(function (gigReport) {
+            // Put Logic here
+            //Determine
+            let rating = gigReport.rating
+            if (rating >= 90) {
+                rating = rating +  "% 🤘"
+            } else if (rating >= 50) {
+                rating = rating + "% 👍"
+            } else {
+                rating = rating + "% 👎"
+            }
+
+            function deletehelper(deleteGigReport, reportId) {
+                deleteGigReport(reportId);
+                window.location.reload();
+            }
+            
+            function renderUserOptions(currentUser, postAuthor, deletehelper, deleteGigReport, gigReportId) {
+                let pathToEditGigReport = "/gigReport/edit/" + gigReportId
+                if (currentUser === postAuthor) {
+                    return (
+                        <div className="post-edit-button-group">
+                            <Link to={pathToEditGigReport}>
+                                <h5>Edit</h5>
+                            </Link>
+                            {/* Dispatch the delete function */}
+                            <h5 className="gigReport-delete" 
+                            onClick={deletehelper.bind(this, deleteGigReport.bind(this), gigReportId)}>
+                                <a>Delete</a>
+                            </h5>
+
+                        </div>
+                    );
+                } else {
+                    return null;
+                }
+            }
+
+            return (
+            <div className="gigReport-container" >
+                <h4 className="text-center mb-4">{gigReport.artist}</h4>
+                <div className="gigReport-header">
+                    <h5 className="">{rating}</h5>
+                    <h5>
+                        {"@" + gigReport.concertVenue + " in " +
+                                gigReport.concertCity + ", " + gigReport.concertState + " "}
+                            <Moment format="MM/DD/YYYY">{gigReport.concertDate}</Moment>
+                    </h5>    
+                </div>
+                <div className="gigReport-body">
+                    <p>{gigReport.postBody}</p>
+                </div>
+                    <div className="gigReport-footer">
+                        {renderUserOptions(currentUser,
+                            gigReport.postAuthor, deletehelper,
+                            deleteGigReport, gigReport._id)}
+                    <h6 className="text-center">Posted: <Moment format="MM/DD/YYYY">{gigReport.postCreated}</Moment></h6>
+                    <Link to={"/profile/" + gigReport.postAuthor}>  
+                        <h6>By {gigReport.postAuthor}</h6>
+                    </Link>     
+                </div>
+            </div>
+            );
+        });
+        return (artistGigReports)
     }
 }
 
@@ -113,13 +195,19 @@ function mapDispatchToProps(dispatch, props) {
             dispatch(loggedIn());
             dispatch(getProfileInfo(window.location.pathname.substring(9)));
             dispatch(updateUserFalse());
+            dispatch(getUserGigReports(window.location.pathname.substring(9)));
         },
+
+        deleteGigReport: (gigReportId) => {
+            dispatch(deleteGigReport(gigReportId))
+        }
     }
 };
 
 
 function mapStateToProps(state, props) {
     return {
+        userGigReportsList: state.gigReport.gigReportsByUser.gigReportsListUser,
         currentUser: state.user.loggedInCheck.currentUser,
         profileUsername: state.profile.profileInfo.username,
         profileAbout: state.profile.profileInfo.about

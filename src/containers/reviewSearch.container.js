@@ -69,7 +69,6 @@ class ReviewSearch extends React.Component {
                 let artistId = artist.id;
                 let pathToArtistPage = "/artistPage/" + artistId;
 
-                console.log("artist images: " + artist.images)
                 let artistProfilePic;
                 if (artist.images) {
                     artistProfilePic = artist.images[0].url
@@ -125,7 +124,6 @@ class ReviewSearch extends React.Component {
                     artistResults.push(artistEntry);
                     i++;
                 }
-                console.log(artistResults);
 
                 this.setState({
                     searchResults: artistResults

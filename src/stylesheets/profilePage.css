@@ -1,6 +1,6 @@
 .profile-container {
-    display: flex;
-    flex-wrap: wrap;
+    /* display: flex;
+    flex-wrap: wrap; */
 }
 
 .profile-info {
@@ -25,7 +25,7 @@
 
 .profile-about-container {
     padding: 0.5em;
-    max-width: 200px;
+    max-width: 400px;
 }
 
 .profile-about-title-container{
@@ -34,7 +34,9 @@
 
 .profile-reviews {
     /* width: 60%; */
-    border-left: 3px solid black;
+    border-top: 3px solid;
+    border-color: #242424;
+    width: 100%;
     padding: 15px;
     background-color: #fff;
 }
@@ -68,4 +70,14 @@
 
 .edit-profile-button:hover {
     background-color: #26949c;
+}
+
+@media (max-width: 1207px) {
+    .profile-reviews {
+        border:none;
+        border-top: 3px solid;
+        border-color: #242424;
+        width: 100%
+    }
+    
 }
