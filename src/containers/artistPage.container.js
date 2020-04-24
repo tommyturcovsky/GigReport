@@ -39,6 +39,11 @@ class ArtistPage extends React.Component {
 
     render() {
         const avgRating = this.calculateArtistAvgRating();
+        console.log("isAdmin? " + this.props.isAdmin)
+        let isAdmin = false;
+        if (this.props.isAdmin) {
+            isAdmin = this.props.isAdmin
+        }
 
         return (
             <div className="">
@@ -54,6 +59,7 @@ class ArtistPage extends React.Component {
                     <div className="gigReports-container">
                         {this._renderGigReports(
                             this.props.currentUser,
+                            isAdmin,
                             this.props.deleteGigReport
                         )}
                     </div>
@@ -62,7 +68,7 @@ class ArtistPage extends React.Component {
         );
     }
 
-    _renderGigReports(currentUser, deleteGigReport) {
+    _renderGigReports(currentUser, isAdmin, deleteGigReport) {
         if (!this.props.gigReportsList) {
             return null;
         }
@@ -88,9 +94,9 @@ class ArtistPage extends React.Component {
                 window.location.reload();
             }
             
-            function renderUserOptions(currentUser, postAuthor, deletehelper, deleteGigReport, gigReportId) {
+            function renderUserOptions(currentUser, isAdmin, postAuthor, deletehelper, deleteGigReport, gigReportId) {
                 let pathToEditGigReport = "/gigReport/edit/" + gigReportId
-                if (currentUser === postAuthor) {
+                if (currentUser === postAuthor || isAdmin) {
                     return (
                         <div className="post-edit-button-group">
                             <Link to={pathToEditGigReport}>
@@ -123,7 +129,7 @@ class ArtistPage extends React.Component {
                     <p>{gigReport.postBody}</p>
                 </div>
                     <div className="gigReport-footer">
-                        {renderUserOptions(currentUser,
+                        {renderUserOptions(currentUser, isAdmin,
                             gigReport.postAuthor, deletehelper,
                             deleteGigReport, gigReport._id)}
                     <h6 className="text-center">Posted: <Moment format="MM/DD/YYYY">{gigReport.postCreated}</Moment></h6>
@@ -261,6 +267,7 @@ function mapStateToProps(state, props) {
     return {
         gigReportsList: state.gigReport.gigReportsByArtist.gigReportsList,
         currentUser: state.user.loggedInCheck.currentUser,
+        isAdmin: state.user.loggedInCheck.admin,
     }
 };
 

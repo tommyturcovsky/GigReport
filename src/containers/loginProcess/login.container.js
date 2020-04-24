@@ -47,7 +47,7 @@ class UserLogin extends React.Component {
                     </Link>
                     <div className="header-buttons">
                     <Link to={'/gigReviewSearch'}>
-                        <button className="header-button find-header">Find Reviews</button>
+                        <button className="header-button find-header">Find GigReports</button>
                     </Link>
                     </div>
                 </div>

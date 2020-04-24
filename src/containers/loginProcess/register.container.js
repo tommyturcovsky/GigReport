@@ -8,7 +8,10 @@ import { Card } from 'react-bootstrap';
 class Register extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {username: '', password: '', validatePassword: '', about: ''};
+        this.state = {
+        username: '', password: '', 
+        validatePassword: '', about: '',
+        adminCode: ''};
     }
 
     handleChange(event, value) {
@@ -27,15 +30,22 @@ class Register extends React.Component {
             password: '',
             validatePassword: '',
             about: '',
+            adminCode: ''
         })
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.valid.success) {
+            let isAdmin = false;
+            if (this.state.adminCode === "admin") {
+                isAdmin = true;
+            }
+
             this.props.register(
                 this.state.username,
                 this.state.password,
-                this.state.about
+                this.state.about,
+                isAdmin
             );
         }
     }
@@ -58,7 +68,7 @@ class Register extends React.Component {
                 </Link>
                 <div className="header-buttons">
                 <Link to={'/gigReviewSearch'}>
-                    <button className="header-button find-header">Find Reviews</button>
+                    <button className="header-button find-header">Find GigReports</button>
                 </Link>
                 </div>
             </div>
@@ -100,6 +110,12 @@ class Register extends React.Component {
                         disabled={this.props.inFlight}
                         value={this.state.about}
                         onChange={(e) => this.handleChange(e, 'about')}/> </label>
+                    <label className="">
+                        Admin Code:
+                        <input type="password"
+                            disabled={this.props.inFlight}
+                            value={this.state.adminCode}
+                            onChange={(e) => this.handleChange(e, 'adminCode')}/> </label>
                         
                     <input
                         className="login-card-button"

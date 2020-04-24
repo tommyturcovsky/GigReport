@@ -4,7 +4,8 @@ const bcrypt = require('bcryptjs');
 const UserSchema = new Schema({
     username: { type: String, index: true },
     password: String,
-    about: String
+    about: String,
+    admin: Boolean
 }, { collection : 'users' });
 
 // Save is a MongoDB API, that is called by 'create'

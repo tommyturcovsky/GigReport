@@ -82,9 +82,12 @@ router.post('/authenticate', function (req, res) {
 //             error => res.status(500).send(error));
 // });
 
-router.get('/loggedIn', authParser, function (req, res) {
+router.get('/loggedIn', authParser, async function (req, res) {
     username = req.session.username;
-    return res.status(200).send({username});
+    return await UserModel.getUserByUserName(username)
+    .then((response) => res.status(200).send(response),
+    (error) =>  res.status(404).send(`Error finding User:${error}`));
+    // return res.status(200).send({username});
 })
 
 router.get('/logout', async (req, res) => {

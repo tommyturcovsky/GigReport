@@ -34,7 +34,7 @@ class WelcomePage extends React.Component {
                                 to go to the show? Check out some reviews by others!
                             </p>
                             <Link to={'/gigReviewSearch'}>
-                            <button className="find-reviews-button">Find Concert Reviews</button>    
+                            <button className="find-reviews-button">Find GigReports</button>    
                             </Link>
                             </div>
                         </div>
@@ -42,7 +42,7 @@ class WelcomePage extends React.Component {
                     <section className="welcome-details">
                         <div className="welcome-details-box1">
                             <h3>Track Your Concerts</h3>
-                            <p>Attend a concert? Make a review, then see your 
+                            <p>Attended a concert? Make a review, then see your 
                             concerts saved to your profile. It is that easy.
                             </p>
                         </div>

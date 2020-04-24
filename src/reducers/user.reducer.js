@@ -84,12 +84,14 @@ function loggedInCheck(
         case 'LOGGED_IN_TRUE':
             return Object.assign({}, state, {
                 loggedInStatus: true,
-                currentUser: action.currentUser
+                currentUser: action.currentUser,
+                admin: action.admin
             });
         case 'LOGGED_IN_FALSE':
             return Object.assign({}, state, {
                 loggedInStatus: false,
-                currentUser: undefined
+                currentUser: undefined,
+                admin: undefined
             });
         default: 
             return Object.assign({}, state, {

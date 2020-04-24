@@ -4,6 +4,7 @@ import {clear, logOut, loggedIn} from '../../actions/user.action'
 import { Redirect } from "react-router";
 import { Link } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
+import loginContainer from "../loginProcess/login.container";
 
 class LogoutContainer extends React.Component {
     onClick(event) {
@@ -33,7 +34,7 @@ class LogoutContainer extends React.Component {
             </div>
             <div className="header-buttons">
                 <Link to={'/gigReviewSearch'}>
-                    <button className="header-button find-header">Find Reviews</button>
+                    <button className="header-button find-header">Find GigReports</button>
                 </Link>
                 <Dropdown>
                     <Dropdown.Toggle variant="secondary" id="dropdown-basic">
@@ -42,7 +43,7 @@ class LogoutContainer extends React.Component {
 
                     <Dropdown.Menu>
                         <Dropdown.Item >
-                            <Link to={{ pathname: pathToMyProfile}}>
+                            <Link to={pathToMyProfile}>
                             <button className="header-button">
                                     My Profile
                             </button>

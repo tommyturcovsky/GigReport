@@ -46,10 +46,11 @@ function logoutSuccess() {
     }
 }
 
-function loggedInTrue(currentUser) {
+function loggedInTrue(currentUser, admin) {
     return {
         type: "LOGGED_IN_TRUE",
-        currentUser: currentUser
+        currentUser: currentUser,
+        admin: admin
     }
 }
 
@@ -93,7 +94,8 @@ export function clear() {
 export function loggedIn() {
     return function (dispatch) {
         return Axios.get('/api/user/loggedin')
-            .then(response => dispatch(loggedInTrue(response.data.username)),
+            .then(response => dispatch(loggedInTrue(response.data.username,
+                response.data.admin)),
             error => dispatch(loggedInFalse()))
     }
 }
@@ -119,10 +121,10 @@ export function logOut() {
     }
 }
 
-export function register(username, password, about) {
+export function register(username, password, about, admin) {
     return function (dispatch) {
         dispatch(registerAttempt());
-        return Axios.post('/api/user/', {username, password, about})
+        return Axios.post('/api/user/', {username, password, about, admin})
             .then(response => {
                 console.dir(response.data);
                 dispatch(registerSuccess(response.data.username))
