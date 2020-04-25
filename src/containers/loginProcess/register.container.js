@@ -36,9 +36,9 @@ class Register extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.valid.success) {
-            let isAdmin = false;
+            let isAdmin = {admin: false};
             if (this.state.adminCode === "admin") {
-                isAdmin = true;
+                isAdmin.admin = true;
             }
 
             this.props.register(
